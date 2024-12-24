@@ -45,6 +45,8 @@ ZB_C_RH="$FXP[reset]$FGP[99]$FXP[blink]"
 ZB_C_P="$FXP[reset]$FGP[228]"
 #Plain Text Color
 ZB_C_T="$FXP[reset]$FGP[15]"
+#Git Branch Color
+ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 
 # Box drawing glyphs 
 #Uncomment the group you wish to see, and comment out the others.
@@ -118,6 +120,19 @@ function zb_pr_wrap_plain()
 ##		zb_pr_<segment>
 ###################################################
 
+function zb_pr_git()
+{
+	local git_repo=$(git branch 2>/dev/null)
+	if [[ "${git_repo}" != "" ]]
+	then
+		ZB_PR_GIT_PLAIN="(${git_repo})"
+		ZB_PR_GIT="${ZB_C_G}(${git_repo})"
+	else
+		ZB_PR_GIT_PLAIN=""
+		ZB_PR_GIT=""
+	fi
+}
+
 function zb_pr_pwd()
 {
 	local prefixlen=${#1}
@@ -131,6 +146,7 @@ function zb_pr_pwd()
 		local startindex=$(( pr_len - max_pwd_seg  ))
 		ZB_PR_PWD_PLAIN="..${ZB_PR_PWD_PLAIN:$startindex}"
 	fi
+
 	ZB_PR_PWD="${ZB_C_P}${ZB_PR_PWD_PLAIN}"
 }
 
@@ -240,7 +256,8 @@ function zb_prompt_precmd
 	zb_pr_user
 	zb_pr_datetime
 	zb_pr_shell
-	zb_pr_pwd ${ZB_PR_SHELL_PLAIN}
+	zb_pr_git
+	zb_pr_pwd ${ZB_PR_GIT_PLAIN}${ZB_PR_SHELL_PLAIN}
 
 	# create the separator line. The separator line is no longer full screen width,
 	# but now extends from the end of the time portion of the prompt to the right
@@ -274,7 +291,7 @@ function zb_prompt_precmd
 
 
 
-	ZB_PR_LINE2_PLAIN="${ZB_PR_LL}$(zb_pr_wrap_plain ${ZB_PR_SHELL_PLAIN})${ZB_PR_SEG}$(zb_pr_wrap_plain ${ZB_PR_PWD_PLAIN})${ZB_PR_SEG}${ZB_PR_LR}"
+	ZB_PR_LINE2_PLAIN="${ZB_PR_LL}$(zb_pr_wrap_plain ${ZB_PR_SHELL_PLAIN})${ZB_PR_SEG}$(zb_pr_wrap_plain ${ZB_PR_GIT_PLAIN}${ZB_PR_PWD_PLAIN})${ZB_PR_SEG}${ZB_PR_LR}"
 	local line2length=${#ZB_PR_LINE2_PLAIN}
 	local line2padlength=$(( COLUMNS-line2length ))
 	local line2pad=${ZB_PR_SEG}
@@ -283,7 +300,7 @@ function zb_prompt_precmd
 		line2pad="${line2pad}${ZB_PR_SEG}"
 		(( line2padlength = line2padlength - 1 ))
 	done
-	ZB_PR_LINE2="${ZB_C_B}${ZB_PR_LL}$(zb_pr_wrap ${ZB_PR_SHELL})${ZB_C_B}${ZB_PR_SEG}$(zb_pr_wrap ${ZB_PR_PWD})${ZB_C_B}${line2pad}${ZB_PR_LR}"
+	ZB_PR_LINE2="${ZB_C_B}${ZB_PR_LL}$(zb_pr_wrap ${ZB_PR_SHELL})${ZB_C_B}${ZB_PR_SEG}$(zb_pr_wrap ${ZB_PR_GIT}${ZB_PR_PWD})${ZB_C_B}${line2pad}${ZB_PR_LR}"
 
 	##	RPROMPT is the right prompt. This is displayed at the right edge of the terminal.
 	##	Setting an RPROMPT might be useful as a visual indicator whether a previous command
