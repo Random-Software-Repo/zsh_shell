@@ -1,0 +1,36 @@
+#!/usr/bin/zsh
+C=${PWD}
+T=$(mktemp -d)
+if [[ -e "$T" ]]
+then
+	echo "Tempdir $T exists."
+	mkdir "${T}/.shells"
+	cp *.zsh *.bash *.fish zb.zshrc lscolors.sh "${T}/.shells/"
+	cp .bash* .zimrc .zlogin .zlogout .zprofile .zshenv .zshrc "${T}/.shells/"
+	cp .screenrc .profile .cshrc "${T}/.shells/"
+	cp -pr .zim "${T}/.shells/"
+	cd "${T}"
+		ln -s ".shells/.bash_logout" ".bash_logout"
+		ln -s ".shells/.bash_profile" ".bash_profile"
+		ln -s ".shells/.bashrc" ".bashrc"
+		ln -s ".shells/.profile" ".profile"
+		ln -s ".shells/.screenrc" ".screenrc"
+		ln -s ".shells/.zshenv" ".zshenv"
+		modifier=1
+		tarfile=shells.tar.bz2
+		while [[ -e "${C}/${tarfile}" ]]
+		do
+			tarfile=shells${modifier}.tar.bz2
+			(( modifier += 1 ))
+		done
+		tar -cjf "${C}/${tarfile}" .
+	rm -rf "${T}"
+	cd "${C}"
+	if [[ -e "${tarfile}" ]]
+	then
+		echo "Tar file is \"${tarfile}\""
+	fi
+	rm -rf "${T}"
+else
+	"Error. Tempdir \"${T}\" does not exist."
+fi
