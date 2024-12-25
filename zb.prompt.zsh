@@ -122,7 +122,7 @@ function zb_pr_wrap_plain()
 
 function zb_pr_git()
 {
-	local git_repo=$(git branch 2>/dev/null)
+	local git_repo=$(git branch --show-current 2>/dev/null)
 	if [[ "${git_repo}" != "" ]]
 	then
 		ZB_PR_GIT_PLAIN="(${git_repo})"
