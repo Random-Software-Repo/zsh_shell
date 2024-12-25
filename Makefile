@@ -26,6 +26,7 @@ install:
 		cd ${dir};ln -sf "./.shells/.screenrc"; \
 		rm "${dir}/.shells/.gitignore"; \
 		rm "${dir}/.shells/Makefile"; \
+		rm "${dir}/.shells/make_tarfile"; \
 	else \
 		echo "Error: could not create $(dir)/.shells"; \
 	fi
