@@ -60,13 +60,13 @@ ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 #	ZB_PR_CB	closing bracket
 
 # Light Box ─┌┐└┘─<>─{}─[]
-	ZB_PR_UL="┌"
-	ZB_PR_LL="└"
-	ZB_PR_UR="┐"
-	ZB_PR_LR="┘"
-	ZB_PR_SEG="─"
-	ZB_PR_OB="{"
-	ZB_PR_CB="}"
+#	ZB_PR_UL="┌"
+#	ZB_PR_LL="└"
+#	ZB_PR_UR="┐"
+#	ZB_PR_LR="┘"
+#	ZB_PR_SEG="─"
+#	ZB_PR_OB="{"
+#	ZB_PR_CB="}"
 	# Alternate brackets: angled but curved a bit
 	#ZB_PR_OB=⧼
 	#ZB_PR_CB=⧽
@@ -85,13 +85,13 @@ ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 #	ZB_PR_OB=⧼
 #	ZB_PR_CB=⧽
 # Curved box ╭╮╯╰─⧼⧽
-#	ZB_PR_UL=╭
-#	ZB_PR_LL=╰
-#	ZB_PR_UR=╮
-#	ZB_PR_LR=╯
-#	ZB_PR_SEG=─
-#	ZB_PR_OB=⧼
-#	ZB_PR_CB=⧽
+	ZB_PR_UL=╭
+	ZB_PR_LL=╰
+	ZB_PR_UR=╮
+	ZB_PR_LR=╯
+	ZB_PR_SEG=─
+	ZB_PR_OB=⧼
+	ZB_PR_CB=⧽
 #
 
 # Wraps a string in opening and closing brackets.
@@ -325,19 +325,15 @@ function zb_prompt_precmd
 
 function zb_prompt_preexec () 
 {
-	## RAW_COMMAND_LINE was to be used in a calculator function, but it'll never work as well as I'd like
-	## as use of / or () in the command line will error out before command_not_found is called. boo hoo.
-	##export RAW_COMMAND_LINE="${1}"
 	export CSTARTS=$SECONDS
-	if [[ "$TERM" == "screen" ]]
-	then
-		local CMD=${1[(wr)^(*=*|sudo|-*)]}
-		echo -n "\ek$CMD\e\\"
-	fi
+#	local CMD=${1[(wr)^(*=*|sudo|-*)]}
+#	echo -n "\ek$CMD\e\\"
 }
+
 function zb_setprompt () 
 {
-	PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
+	#PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
+	#PR_TITLEBAR=$'${1[(wr)^(*=*|sudo|-*)]}'
 
 
 	###
@@ -365,15 +361,13 @@ function zb_setprompt ()
 		L00="💲$FXP[reset]"
 		L01="🔅$FXP[reset]"
 		L02="🔆💲$FXP[reset]"
-		L03="🔆$FGP[34]❱❱$FXP[reset]"
-		L04="🔆$FGP[34]⫸$FXP[reset]"
+		L03="🔆$FGP[34]❱❱ $FXP[reset]"
+		L04="🔆$FGP[34]⫸ $FXP[reset]"
 
 		#The actual, whole prompt (insert your chosen option in the last line ofthe prompt:
-		#<last-return-code, runtime-in-seconds>-<long-format-date-and-time>----<user@host:/pts>
-		#<shell-level:history-size>-<pwd>
 		PROMPT='${(e)PR_TITLEBAR}%B${ZB_PR_LINE1}$FXP[reset]
 ${ZB_PR_LINE2}$FXP[reset]
-${L03} '
+${L03}'
 	fi
 
 	PS2='$FGP[6]━$FGP[4]━($FGP[10]%_$FGP[4]━$FGP[6]━%F{default} '
