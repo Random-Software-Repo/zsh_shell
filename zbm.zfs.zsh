@@ -6,5 +6,5 @@
 ##
 if (( $+commands[zfs] ))
 then
-	alias zfsl="zfs list -t filesystem -o space,encryption,mountpoint"
+	alias zfsl="zfs list -t filesystem -o name,avail,used,encryption,canmount,mountpoint"
 fi
