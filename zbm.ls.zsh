@@ -36,9 +36,9 @@ then
 	# ds: as d, sort by size, including dot files
 	export TIME_STYLE=long-iso
 	alias ls="${NEWLS} --icons"
-	alias d="${NEWLS} --icons --group-directories-first -lg"
-	alias da="${NEWLS} --icons --group-directories-first -lga"
-	alias ds="${NEWLS} --icons --group-directories-first --sort=size -lga"
+	alias d="${NEWLS} --icons --group-directories-first --no-quotes -lg"
+	alias da="${NEWLS} --icons --group-directories-first --no-quotes -lga"
+	alias ds="${NEWLS} --icons --group-directories-first --sort=size --no-quotes -lga"
 
 	# dd: list in reverse modified order, long format, human reabable
 	#	that is, the newest/most recently modified file will be
@@ -46,9 +46,9 @@ then
 	#	dot files
 	# ddl: as dd, show file sizes --icons in bytes
 	# dds: as dd but by size rather than modified age
-	alias dd="${NEWLS} --icons --group-directories-first --sort=modified -lga"
-	alias ddl="${NEWLS} --icons --group-directories-first --sort=modified -lgaB"
-	alias dds="${NEWLS} --icons --group-directories-first --sort=size -la"
+	alias dd="${NEWLS} --icons --group-directories-first --sort=modified --no-quotes -lga"
+	alias ddl="${NEWLS} --icons --group-directories-first --sort=modified --no-quotes -lgaB"
+	alias dds="${NEWLS} --icons --group-directories-first --sort=size --no-quotes -la"
 elif (( $+commands[lsd] ))
 then
 	alias ls='lsd'
