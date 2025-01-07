@@ -20,7 +20,7 @@ setopt INC_APPEND_HISTORY_TIME	# append to history file immediately (rather than
 #setopt share_history			# share command history data
 setopt append_history			# append to history file (rather than overwrite)
 export HISTFILE=~/.zsh_history${DBHISTMODIFIER}	# location of saved history file
-export HISTSIZE=100000			# number of history lines in memory
+export HISTSIZE=200000			# number of history lines in memory
 export SAVEHIST=10000000		# number of history lines saved in HISTFILE
 export DIRSTACKSIZE=100
 
@@ -53,7 +53,6 @@ bindkey "$terminfo[kcud1]" down-line-or-beginning-search
 source ~/.shells/zb.environment.zsh
 source ~/.shells/zb.aliases.zsh
 source ~/.shells/zb.prompt.zsh
-#source ~/.shells/zb.history.zsh
 
 autoload -U add-zsh-hook
 
