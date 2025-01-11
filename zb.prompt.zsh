@@ -49,7 +49,8 @@ ZB_C_T="$FXP[reset]$FGP[15]"
 ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 
 # Box drawing glyphs 
-#Uncomment the group you wish to see, and comment out the others.
+#Set ZB_PR_OPT to the index of the group you wish to see
+#This can be changed at run-time (export ZB_PR_OPT=3, e.g.)
 #
 #	ZB_PR_UL	upper left corner
 #	ZB_PR_LL	lower left corner
@@ -59,44 +60,32 @@ ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 #	ZB_PR_OB	opening bracket
 #	ZB_PR_CB	closing bracket
 
-# Light Box ─┌┐└┘─<>─{}─[]
-	ZB_PR_UL="┌"
-	ZB_PR_LL="└"
-	ZB_PR_UR="┐"
-	ZB_PR_LR="┘"
-	ZB_PR_SEG="─"
-	ZB_PR_OB="{"
-	ZB_PR_CB="}"
-	# Alternate brackets: angled but curved a bit
-	#ZB_PR_OB=⧼
-	#ZB_PR_CB=⧽
-	# Alternate alternate brackets: square
-	#ZB_PR_OB="["
-	#ZB_PR_CB="]"
-# Heavy Box ━┏┓┗┛┫┣
-#	ZB_PR_UL=┏
-#	ZB_PR_LL=┗
-#	ZB_PR_UR=┓
-#	ZB_PR_LR=┛
-#	ZB_PR_SEG=━
-#	#ZB_PR_OB=┫
-#	#ZB_PR_CB=┣
-#	#Alternate brackets: angled but curved a bit and lighter.
-#	ZB_PR_OB=⧼
-#	ZB_PR_CB=⧽
-#	#Alternate brackets: arrows.
-#	ZB_PR_OB=►
-#	ZB_PR_CB=◄
+# Depending on the font used and your terminal emulator, these
+# box drawing decorations may look different than here.
+# 1 Light Box       ┌─{}─┐└─{}─┘
+# 2 Heavy Box       ┏━┫┣━┓┗━┫┣━┛
+# 3 Curved box      ╭─⧼⧽─╮╰─⧼⧽─╯
+# 4 Heavy Arrow box ┏━◄►━┓┗━◄►━┛
+	ZB_PR_UL_A=("┌" "┏" "╭" "┏")
+	ZB_PR_LL_A=("└" "┗" "╰" "┗")
+	ZB_PR_UR_A=("┐" "┓" "╮" "┓")
+	ZB_PR_LR_A=("┘" "┛" "╯" "┛")
+	ZB_PR_SG_A=("─" "━" "─" "━")
+	ZB_PR_OB_A=("{" "┫" "⧼" "►")
+	ZB_PR_CB_A=("}" "┣" "⧽" "◄")
 
-# Curved box ╭╮╯╰─⧼⧽
-#	ZB_PR_UL=╭
-#	ZB_PR_LL=╰
-#	ZB_PR_UR=╮
-#	ZB_PR_LR=╯
-#	ZB_PR_SEG=─
-#	ZB_PR_OB=⧼
-#	ZB_PR_CB=⧽
-#
+export ZB_PR_OPT=4
+# Light Box ─┌┐└┘─<>─{}─[]
+function zb_pr_set_decorations()
+{
+	ZB_PR_UL=$ZB_PR_UL_A[${ZB_PR_OPT}]
+	ZB_PR_LL=$ZB_PR_LL_A[${ZB_PR_OPT}]
+	ZB_PR_UR=$ZB_PR_UR_A[${ZB_PR_OPT}]
+	ZB_PR_LR=$ZB_PR_LR_A[${ZB_PR_OPT}]
+	ZB_PR_SEG=$ZB_PR_SG_A[${ZB_PR_OPT}]
+	ZB_PR_OB=$ZB_PR_OB_A[${ZB_PR_OPT}]
+	ZB_PR_CB=$ZB_PR_CB_A[${ZB_PR_OPT}]
+}
 
 # Wraps a string in opening and closing brackets.
 function zb_pr_wrap()
@@ -248,6 +237,7 @@ function zb_pr_user()
 ##	long format date and time (colorized)
 function zb_prompt_precmd 
 {
+	zb_pr_set_decorations
 	local errorcode=$?
 	zb_pr_errorcode $errorcode
 
