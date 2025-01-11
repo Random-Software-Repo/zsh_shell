@@ -14,7 +14,7 @@ source ~/.shells/zb.prompt.common.zsh
 ## display correctly
 ##autoload colors
 ##colors
-
+unsetopt PROMPT_BANG
 # array of colors to represent time where the colors are all 
 # brown/yellows and get darker as the day progresses.
 typeset -gA ZB_C_DT
@@ -60,13 +60,13 @@ ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 #	ZB_PR_CB	closing bracket
 
 # Light Box ─┌┐└┘─<>─{}─[]
-#	ZB_PR_UL="┌"
-#	ZB_PR_LL="└"
-#	ZB_PR_UR="┐"
-#	ZB_PR_LR="┘"
-#	ZB_PR_SEG="─"
-#	ZB_PR_OB="{"
-#	ZB_PR_CB="}"
+	ZB_PR_UL="┌"
+	ZB_PR_LL="└"
+	ZB_PR_UR="┐"
+	ZB_PR_LR="┘"
+	ZB_PR_SEG="─"
+	ZB_PR_OB="{"
+	ZB_PR_CB="}"
 	# Alternate brackets: angled but curved a bit
 	#ZB_PR_OB=⧼
 	#ZB_PR_CB=⧽
@@ -84,14 +84,18 @@ ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 #	#Alternate brackets: angled but curved a bit and lighter.
 #	ZB_PR_OB=⧼
 #	ZB_PR_CB=⧽
+#	#Alternate brackets: arrows.
+#	ZB_PR_OB=►
+#	ZB_PR_CB=◄
+
 # Curved box ╭╮╯╰─⧼⧽
-	ZB_PR_UL=╭
-	ZB_PR_LL=╰
-	ZB_PR_UR=╮
-	ZB_PR_LR=╯
-	ZB_PR_SEG=─
-	ZB_PR_OB=⧼
-	ZB_PR_CB=⧽
+#	ZB_PR_UL=╭
+#	ZB_PR_LL=╰
+#	ZB_PR_UR=╮
+#	ZB_PR_LR=╯
+#	ZB_PR_SEG=─
+#	ZB_PR_OB=⧼
+#	ZB_PR_CB=⧽
 #
 
 # Wraps a string in opening and closing brackets.
