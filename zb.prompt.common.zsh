@@ -81,7 +81,7 @@ function print_colors
 
 ## SETUP OS SPECIFIC NERD-FONT ICONS FOR THE PROMPT 
 ## (ONLY FOR UNIX LIKE ENVIRONMENTS WHICH 
-## HAVE A /etc/os-release FIlE WITH A "KNOWN" ID= VALUE)
+## HAVE A /etc/os-release FILE WITH A "KNOWN" ID= VALUE)
 ## EVEN SO, NOT ALL OF THESE HAVE NERD-FONT ICONS
 POSICONS[linux]=""
 POSICONS[almalinux]=""
@@ -124,7 +124,7 @@ POSICONS[void]=""
 
 
 source /etc/os-release
-export PROMPT_OS_ICON=${POS[${ID}]}
+export PROMPT_OS_ICON=${POSICONS[${ID}]}
 ## DONE WITH PROMPT OS ICONS
 
 
