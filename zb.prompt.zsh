@@ -354,14 +354,15 @@ function zb_setprompt ()
 		#Several options for the left most part of the prompt immediately prior to the cursor:
 		L00="💲$FXP[reset]"
 		L01="🔅$FXP[reset]"
-		L02="🔆💲$FXP[reset]"
-		L03="🔆$FGP[34]❱❱ $FXP[reset]"
-		L04="🔆$FGP[34]⫸ $FXP[reset]"
+		L02="🔆 💲$FXP[reset]"
+		L03="🔆$FGP[34] ❱❱ $FXP[reset]"
+		L04="🔆$FGP[34] ⫸ $FXP[reset]"
+		L05="${PROMPT_OS_ICON}$FGP[34] ❱❱ $FXP[reset]"
 
 		#The actual, whole prompt (insert your chosen option in the last line ofthe prompt:
 		PROMPT='${(e)PR_TITLEBAR}%B${ZB_PR_LINE1}$FXP[reset]
 ${ZB_PR_LINE2}$FXP[reset]
-${L03}'
+${L05}'
 	fi
 
 	PS2='$FGP[6]━$FGP[4]━($FGP[10]%_$FGP[4]━$FGP[6]━%F{default} '

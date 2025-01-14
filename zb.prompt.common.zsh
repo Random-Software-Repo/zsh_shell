@@ -16,7 +16,7 @@
 # FGP 		Foreground colors wrapped with %{ and %} for use in the prompt (the prompt requires different encoding of colors)
 # BGP 		Background colors for use in prompts
 # FXP 		Effects codes for use in prompts 
-typeset -Ag FX FG BG FGP BGP FXP
+typeset -Ag FX FG BG FGP BGP FXP POSICONS
 
 #### array of effects codes
 FX=(
@@ -77,8 +77,55 @@ function print_colors
 		fi
 	done
 }
-
 ## DONE SETTING UP COLORS
+
+## SETUP OS SPECIFIC NERD-FONT ICONS FOR THE PROMPT 
+## (ONLY FOR UNIX LIKE ENVIRONMENTS WHICH 
+## HAVE A /etc/os-release FIlE WITH A "KNOWN" ID= VALUE)
+## EVEN SO, NOT ALL OF THESE HAVE NERD-FONT ICONS
+POSICONS[linux]=""
+POSICONS[almalinux]=""
+POSICONS[alpine]=""
+POSICONS[arch]=""
+POSICONS[centos]=""
+POSICONS[chimera]=""
+POSICONS[debian]=""
+POSICONS[Deepin]=""
+POSICONS[dragonfly]=""
+POSICONS[elementary]=""
+POSICONS[endeavouros]=""
+POSICONS[eurolinux]=""
+POSICONS[fedora]=""
+POSICONS[freebsd]=""
+POSICONS[gentoo]=""
+POSICONS[ghostbsd]=""
+POSICONS[illumos]=""
+POSICONS[linuxmint]="󰣭"
+POSICONS[manjaro]=""
+POSICONS[nixos]=""
+POSICONS[ol]=""
+POSICONS[omnios]=""
+POSICONS[openbsd]=""
+POSICONS[openmandriva]=""
+POSICONS[opensuse-leap]=""
+POSICONS[opensuse-tumbleweed]=""
+POSICONS[openwrt]="󱂇"
+POSICONS[pika]="󱂇"
+POSICONS[pop]=""
+POSICONS[raspbian]=""
+POSICONS[rhel]=""
+POSICONS[rocky]=""
+POSICONS[slackware]=""
+POSICONS[sles]=""
+POSICONS[solaris]=""
+POSICONS[steamos]=""
+POSICONS[Ubuntu]=""
+POSICONS[void]=""
+
+
+source /etc/os-release
+export PROMPT_OS_ICON=${POS[${ID}]}
+## DONE WITH PROMPT OS ICONS
 
 
 setopt prompt_subst
