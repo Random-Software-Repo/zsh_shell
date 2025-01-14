@@ -103,7 +103,7 @@ POSICONS[illumos]=""
 POSICONS[linuxmint]="󰣭"
 POSICONS[manjaro]=""
 POSICONS[nixos]=""
-POSICONS[ol]=""
+POSICONS[ol]="󱓼"
 POSICONS[omnios]=""
 POSICONS[openbsd]=""
 POSICONS[openmandriva]=""
@@ -124,7 +124,12 @@ POSICONS[void]=""
 
 
 source /etc/os-release
-export PROMPT_OS_ICON=${POSICONS[${ID}]}
+if [[ "${POSICONS[${ID}]}" != "" ]]
+then
+	export PROMPT_OS_ICON=${POSICONS[${ID}]}
+else
+	export PROMPT_OS_ICON=🔆
+fi	
 ## DONE WITH PROMPT OS ICONS
 
 
