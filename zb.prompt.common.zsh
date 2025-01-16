@@ -83,27 +83,32 @@ function print_colors
 ## (ONLY FOR UNIX LIKE ENVIRONMENTS WHICH 
 ## HAVE A /etc/os-release FILE WITH A "KNOWN" ID= VALUE)
 ## EVEN SO, NOT ALL OF THESE HAVE NERD-FONT ICONS
-OS_ICONS[linux]=""
+#OS_ICONS[linux]=""
 OS_ICONS[almalinux]=""
 OS_ICONS[alpine]=""
+OS_ICONS[amzn]=""
 OS_ICONS[arch]=""
+OS_ICONS[arcolinux]=""
 OS_ICONS[centos]=""
-OS_ICONS[chimera]=""
+#OS_ICONS[chimera]=""
 OS_ICONS[debian]=""
 OS_ICONS[Deepin]=""
-OS_ICONS[dragonfly]=""
+OS_ICONS[devuan]=""
+#OS_ICONS[dragonfly]=""
 OS_ICONS[elementary]=""
 OS_ICONS[endeavouros]=""
-OS_ICONS[eurolinux]=""
+#OS_ICONS[eurolinux]=""
 OS_ICONS[fedora]=""
 OS_ICONS[freebsd]=""
 OS_ICONS[gentoo]=""
-OS_ICONS[ghostbsd]=""
+#OS_ICONS[ghostbsd]=""
+OS_ICONS[kali]=""
 OS_ICONS[illumos]=""
 OS_ICONS[linuxmint]="󰣭"
+OS_ICONS[mageia]=""
 OS_ICONS[manjaro]=""
 OS_ICONS[nixos]=""
-OS_ICONS[ol]="󱓼"
+#OS_ICONS[ol]="󱓼"
 OS_ICONS[omnios]=""
 OS_ICONS[openbsd]=""
 OS_ICONS[openmandriva]=""
@@ -115,12 +120,15 @@ OS_ICONS[pop]=""
 OS_ICONS[raspbian]=""
 OS_ICONS[rhel]=""
 OS_ICONS[rocky]=""
+#OS_ICONS[scientific]=""
 OS_ICONS[slackware]=""
+OS_ICONS[sled]=""
 OS_ICONS[sles]=""
 OS_ICONS[solaris]=""
-OS_ICONS[steamos]=""
+OS_ICONS[steamos]=""
 OS_ICONS[Ubuntu]=""
 OS_ICONS[void]=""
+#OS_ICONS[xenenterprise]=""
 
 
 export PROMPT_OS_ICON=🔆
@@ -130,6 +138,30 @@ then
 	if [[ "${OS_ICONS[${ID}]}" != "" ]]
 	then
 		export PROMPT_OS_ICON=${OS_ICONS[${ID}]}
+	elif [[ "${OS_ICONS[${ID_LIKE}]}" != "" ]]
+	then
+		export PROMPT_OS_ICON=${OS_ICONS[${ID_LIKE}]}
+	else
+		# not one of the OS or distrobutions we specifically know about, 
+		# check if it's some other sort of linux
+		if (( $+commands[uname] ))
+		then
+			$(uname -a | grep -q -i linux)
+			if [[ $? -eq 0 ]]
+			then
+				# it's some other linux distro
+				export PROMPT_OS_ICON=""
+			else
+				# it's not a linux distro
+				$(uname -a | grep -q -i bsd)
+				if [[ $? -eq 0 ]]
+				then
+					# it's one of the other BSDs (besides Free and Open)
+					#export PROMPT_OS_ICON=""
+					export PROMPT_OS_ICON="${FXP[bold]}BSD${FXP[reset]}"
+				fi
+			fi
+		fi
 	fi
 fi
 
