@@ -16,7 +16,7 @@
 # FGP 		Foreground colors wrapped with %{ and %} for use in the prompt (the prompt requires different encoding of colors)
 # BGP 		Background colors for use in prompts
 # FXP 		Effects codes for use in prompts 
-typeset -Ag FX FG BG FGP BGP FXP POSICONS
+typeset -Ag FX FG BG FGP BGP FXP OS_ICONS
 
 #### array of effects codes
 FX=(
@@ -83,53 +83,56 @@ function print_colors
 ## (ONLY FOR UNIX LIKE ENVIRONMENTS WHICH 
 ## HAVE A /etc/os-release FILE WITH A "KNOWN" ID= VALUE)
 ## EVEN SO, NOT ALL OF THESE HAVE NERD-FONT ICONS
-POSICONS[linux]=""
-POSICONS[almalinux]=""
-POSICONS[alpine]=""
-POSICONS[arch]=""
-POSICONS[centos]=""
-POSICONS[chimera]=""
-POSICONS[debian]=""
-POSICONS[Deepin]=""
-POSICONS[dragonfly]=""
-POSICONS[elementary]=""
-POSICONS[endeavouros]=""
-POSICONS[eurolinux]=""
-POSICONS[fedora]=""
-POSICONS[freebsd]=""
-POSICONS[gentoo]=""
-POSICONS[ghostbsd]=""
-POSICONS[illumos]=""
-POSICONS[linuxmint]="󰣭"
-POSICONS[manjaro]=""
-POSICONS[nixos]=""
-POSICONS[ol]="󱓼"
-POSICONS[omnios]=""
-POSICONS[openbsd]=""
-POSICONS[openmandriva]=""
-POSICONS[opensuse-leap]=""
-POSICONS[opensuse-tumbleweed]=""
-POSICONS[openwrt]="󱂇"
-POSICONS[pika]="󱂇"
-POSICONS[pop]=""
-POSICONS[raspbian]=""
-POSICONS[rhel]=""
-POSICONS[rocky]=""
-POSICONS[slackware]=""
-POSICONS[sles]=""
-POSICONS[solaris]=""
-POSICONS[steamos]=""
-POSICONS[Ubuntu]=""
-POSICONS[void]=""
+OS_ICONS[linux]=""
+OS_ICONS[almalinux]=""
+OS_ICONS[alpine]=""
+OS_ICONS[arch]=""
+OS_ICONS[centos]=""
+OS_ICONS[chimera]=""
+OS_ICONS[debian]=""
+OS_ICONS[Deepin]=""
+OS_ICONS[dragonfly]=""
+OS_ICONS[elementary]=""
+OS_ICONS[endeavouros]=""
+OS_ICONS[eurolinux]=""
+OS_ICONS[fedora]=""
+OS_ICONS[freebsd]=""
+OS_ICONS[gentoo]=""
+OS_ICONS[ghostbsd]=""
+OS_ICONS[illumos]=""
+OS_ICONS[linuxmint]="󰣭"
+OS_ICONS[manjaro]=""
+OS_ICONS[nixos]=""
+OS_ICONS[ol]="󱓼"
+OS_ICONS[omnios]=""
+OS_ICONS[openbsd]=""
+OS_ICONS[openmandriva]=""
+OS_ICONS[opensuse-leap]=""
+OS_ICONS[opensuse-tumbleweed]=""
+OS_ICONS[openwrt]="󱂇"
+OS_ICONS[pika]="󱂇"
+OS_ICONS[pop]=""
+OS_ICONS[raspbian]=""
+OS_ICONS[rhel]=""
+OS_ICONS[rocky]=""
+OS_ICONS[slackware]=""
+OS_ICONS[sles]=""
+OS_ICONS[solaris]=""
+OS_ICONS[steamos]=""
+OS_ICONS[Ubuntu]=""
+OS_ICONS[void]=""
 
 
-source /etc/os-release
-if [[ "${POSICONS[${ID}]}" != "" ]]
+export PROMPT_OS_ICON=🔆
+if [[ -e /etc/os-release ]]
 then
-	export PROMPT_OS_ICON=${POSICONS[${ID}]}
-else
-	export PROMPT_OS_ICON=🔆
-fi	
+	source /etc/os-release
+	if [[ "${OS_ICONS[${ID}]}" != "" ]]
+	then
+		export PROMPT_OS_ICON=${OS_ICONS[${ID}]}
+	fi
+fi
+
 ## DONE WITH PROMPT OS ICONS
 
 
