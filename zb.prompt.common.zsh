@@ -142,7 +142,7 @@ then
 	then
 		export PROMPT_OS_ICON=${OS_ICONS[${ID_LIKE}]}
 	else
-		# not one of the OS or distrobutions we specifically know about, 
+		# not one of the OS or distributions we specifically know about, 
 		# check if it's some other sort of linux
 		if (( $+commands[uname] ))
 		then
