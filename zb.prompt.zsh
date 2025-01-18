@@ -23,31 +23,6 @@ ZB_C_DT=( 0 $FGP[94] 1 $FGP[94] 2 $FGP[130] 3 $FGP[130] 4 $FGP[172] 5 $FGP[172]
 			12 $FGP[229] 13 $FGP[229] 14 $FGP[228] 15 $FGP[228] 16 $FGP[227] 17 $FGP[227] 
 			18 $FGP[226] 19 $FGP[226] 20 $FGP[172] 21 $FGP[172] 22 $FGP[130] 23 $FGP[130] )
 
-#Box / border color
-ZB_C_B="$FXP[reset]$FGP[32]$FXP[bold]"
-#Error codes color
-ZB_C_E="$FXP[reset]$FGP[1]"
-#Executine Time Color (seconds)
-ZB_C_S="$FXP[reset]$FGP[2]"
-#Local Normal User Color
-ZB_C_LU="$FXP[reset]$FGP[2]"
-#Local Different (from logged in user) User Color
-ZB_C_DU="$FXP[reset]$FGP[208]"
-#Root User Color
-ZB_C_RU="$FXP[reset]$FGP[1]$FXP[blink]"
-#Remote (non local) User color
-ZB_C_NLU="$FXP[reset]$FGP[202]"
-#Local Host Color
-ZB_C_LH="$FXP[reset]$FGP[46]"
-#Remote Host Color
-ZB_C_RH="$FXP[reset]$FGP[99]$FXP[blink]"
-#PWD color
-ZB_C_P="$FXP[reset]$FGP[228]"
-#Plain Text Color
-ZB_C_T="$FXP[reset]$FGP[15]"
-#Git Branch Color
-ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
-
 # Box drawing glyphs 
 #Set ZB_PR_OPT to the index of the group you wish to see
 #This can be changed at run-time (export ZB_PR_OPT=3, e.g.)
@@ -76,6 +51,8 @@ ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
 
 export ZB_PR_OPT=4
 # Light Box ─┌┐└┘─<>─{}─[]
+#export ZB_BORDER_COLOR="32"
+export ZB_BORDER_COLOR="66"
 function zb_pr_set_decorations()
 {
 	ZB_PR_UL=$ZB_PR_UL_A[${ZB_PR_OPT}]
@@ -85,6 +62,34 @@ function zb_pr_set_decorations()
 	ZB_PR_SEG=$ZB_PR_SG_A[${ZB_PR_OPT}]
 	ZB_PR_OB=$ZB_PR_OB_A[${ZB_PR_OPT}]
 	ZB_PR_CB=$ZB_PR_CB_A[${ZB_PR_OPT}]
+
+
+	#Box / border color
+	ZB_C_B="$FXP[reset]$FGP[${ZB_BORDER_COLOR}]$FXP[bold]"
+	#Error codes color
+	ZB_C_E="$FXP[reset]$FGP[1]"
+	#Executine Time Color (seconds)
+	ZB_C_S="$FXP[reset]$FGP[2]"
+	#Local Normal User Color
+	ZB_C_LU="$FXP[reset]$FGP[2]"
+	#Local Different (from logged in user) User Color
+	ZB_C_DU="$FXP[reset]$FGP[208]"
+	#Root User Color
+	ZB_C_RU="$FXP[reset]$FGP[1]$FXP[blink]"
+	#Remote (non local) User color
+	ZB_C_NLU="$FXP[reset]$FGP[202]"
+	#Local Host Color
+	ZB_C_LH="$FXP[reset]$FGP[46]"
+	#Remote Host Color
+	ZB_C_RH="$FXP[reset]$FGP[99]$FXP[blink]"
+	#PWD color
+	ZB_C_P="$FXP[reset]$FGP[228]"
+	#Plain Text Color
+	ZB_C_T="$FXP[reset]$FGP[15]"
+	#Git Branch Color
+	ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
+
+
 }
 
 # Wraps a string in opening and closing brackets.
