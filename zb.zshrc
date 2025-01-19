@@ -71,4 +71,7 @@ for userfile in ~/.shells/zb.${USER}.*(N)
 do
 	source ${userfile}
 done
-
+for hostfile in ~/.shells/zb.${HOSTNAME}.zsh(N)
+do
+  source ${hostfile}
+done
