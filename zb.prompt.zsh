@@ -40,21 +40,58 @@ ZB_C_DT=( 0 $FGP[94] 1 $FGP[94] 2 $FGP[130] 3 $FGP[130] 4 $FGP[172] 5 $FGP[172]
 # 1 Light Box       ┌─{}─┐└─{}─┘
 # 2 Heavy Box       ┏━┫┣━┓┗━┫┣━┛
 # 3 Curved box      ╭─⧼⧽─╮╰─⧼⧽─╯
-# 4 Heavy Arrow box ┏━◄►━┓┗━◄►━┛
-	ZB_PR_UL_A=("┌" "┏" "╭" "┏")
-	ZB_PR_LL_A=("└" "┗" "╰" "┗")
-	ZB_PR_UR_A=("┐" "┓" "╮" "┓")
-	ZB_PR_LR_A=("┘" "┛" "╯" "┛")
-	ZB_PR_SG_A=("─" "━" "─" "━")
-	ZB_PR_OB_A=("{" "┫" "⧼" "►")
-	ZB_PR_CB_A=("}" "┣" "⧽" "◄")
+# 3 Alt. Curved box ╭─🮤🮥─╮╰─🮤🮥─╯
+# 5 Heavy Arrow box ┏━►◄━┓┗━►◄━┛ (the alignment of these depends heavily on terminal and font)
+# 6+ Experimental
+##			1		2		3		4		5		6		7		8		9		10		11		12		13
+ZB_PR_UL_A=("┌"		"┏"		"╭"		"╭"		"┏"		"█"		"█"		"█"		"█"		"╭"		"╭"		"🭽"		"╭")
+ZB_PR_LL_A=("└"		"┗"		"╰"		"╰"		"┗"		"█"		"█"		"█"		"█"		"╰"		"╰"		"🭼"		"╰")
+ZB_PR_UR_A=("┐"		"┓"		"╮"		"╮"		"┓"		"█"		"█"		"█"		"█"		"╮"		"╮"		"🭾"		"╮")
+ZB_PR_LR_A=("┘"		"┛"		"╯"		"╯"		"┛"		"█"		"█"		"█"		"█"		"╯"		"╯"		"🭿"		"╯")
+ZB_PR_SG_A=("─"		"━"		"─"		"─"		"━"		"█"		"█"		"█"		"█"		"─"		"─"		"🮀"		"─")
+ZB_PR_OB_A=("{"		"󰅁"		"󰅁"		"🮤"		"►"		"🭬"		""		"🭛"		"🭀"		"❴"		"⧼"		"🮀"		"")
+ZB_PR_CB_A=("}"		"󰅂"		"󰅂"		"🮥"		"◄"		"🭮"		""		"🭋"		"🭦"		"❵"		"⧼"		"🮀"		"")
 
-export ZB_PR_OPT=4
-# Light Box ─┌┐└┘─<>─{}─[]
-#export ZB_BORDER_COLOR="32"
-export ZB_BORDER_COLOR="66"
+export ZB_THEME=0
+function zb_set_theme()
+{
+	case ${ZB_THEME} in
+		'1' )
+			export ZB_PR_OPT=13
+			export ZB_BORDER_COLOR=0
+			export ZB_BORDER_BACKGROUND_COLOR=
+			export ZB_BACKGROUND_COLOR=0
+			;;
+		'2' )
+			export ZB_PR_OPT=5
+			export ZB_BORDER_COLOR=2
+			export ZB_BORDER_BACKGROUND_COLOR=
+			export ZB_BACKGROUND_COLOR=
+			;;
+		'0' | * )
+			export ZB_PR_OPT=4
+			export ZB_BORDER_COLOR=32
+			export ZB_BORDER_BACKGROUND_COLOR=
+			export ZB_BACKGROUND_COLOR=
+			;;
+	esac
+}
+
 function zb_pr_set_decorations()
 {
+	zb_set_theme
+	if [[ $ZB_BACKGROUND_COLOR ]]
+	then
+		ZB_BACKGROUND=$BGP[${ZB_BACKGROUND_COLOR}]
+	else
+		ZB_BACKGROUND=
+	fi
+	if [[ $ZB_BORDER_BACKGROUND_COLOR ]]
+	then
+		ZB_BORDER_BACKGROUND=$BGP[${ZB_BORDER_BACKGROUND_COLOR}]
+	else
+		ZB_BORDER_BACKGROUND=
+	fi
 	ZB_PR_UL=$ZB_PR_UL_A[${ZB_PR_OPT}]
 	ZB_PR_LL=$ZB_PR_LL_A[${ZB_PR_OPT}]
 	ZB_PR_UR=$ZB_PR_UR_A[${ZB_PR_OPT}]
@@ -65,29 +102,29 @@ function zb_pr_set_decorations()
 
 
 	#Box / border color
-	ZB_C_B="$FXP[reset]$FGP[${ZB_BORDER_COLOR}]$FXP[bold]"
+	ZB_C_B="$FXP[reset]$ZB_BORDER_BACKGROUND$FGP[${ZB_BORDER_COLOR}]$FXP[bold]"
 	#Error codes color
-	ZB_C_E="$FXP[reset]$FGP[1]"
+	ZB_C_E="$FXP[reset]$ZB_BACKGROUND$FGP[1]"
 	#Executine Time Color (seconds)
-	ZB_C_S="$FXP[reset]$FGP[2]"
+	ZB_C_S="$FXP[reset]$ZB_BACKGROUND$FGP[2]"
 	#Local Normal User Color
-	ZB_C_LU="$FXP[reset]$FGP[2]"
+	ZB_C_LU="$FXP[reset]$ZB_BACKGROUND$FGP[2]"
 	#Local Different (from logged in user) User Color
-	ZB_C_DU="$FXP[reset]$FGP[208]"
+	ZB_C_DU="$FXP[reset]$ZB_BACKGROUND$FGP[208]"
 	#Root User Color
-	ZB_C_RU="$FXP[reset]$FGP[1]$FXP[blink]"
+	ZB_C_RU="$FXP[reset]$ZB_BACKGROUND$FGP[1]$FXP[blink]"
 	#Remote (non local) User color
-	ZB_C_NLU="$FXP[reset]$FGP[202]"
+	ZB_C_NLU="$FXP[reset]$ZB_BACKGROUND$FGP[202]"
 	#Local Host Color
-	ZB_C_LH="$FXP[reset]$FGP[46]"
+	ZB_C_LH="$FXP[reset]$ZB_BACKGROUND$FGP[46]"
 	#Remote Host Color
-	ZB_C_RH="$FXP[reset]$FGP[99]$FXP[blink]"
+	ZB_C_RH="$FXP[reset]$ZB_BACKGROUND$FGP[99]$FXP[blink]"
 	#PWD color
-	ZB_C_P="$FXP[reset]$FGP[228]"
+	ZB_C_P="$FXP[reset]$ZB_BACKGROUND$FGP[228]"
 	#Plain Text Color
-	ZB_C_T="$FXP[reset]$FGP[15]"
+	ZB_C_T="$FXP[reset]$ZB_BACKGROUND$FGP[15]"
 	#Git Branch Color
-	ZB_C_G="$FXP[reset]$FXP[bold]$FGP[11]"
+	ZB_C_G="$FXP[reset]$ZB_BACKGROUND$FXP[bold]$FGP[11]"
 
 
 }
@@ -175,7 +212,7 @@ function zb_pr_datetime()
 	## or whatever happens to be in the array
 	local dtcolor="$ZB_C_DT[$(( $(date '+%H') % 24 ))]"
 	ZB_PR_DATETIME_PLAIN="$(date +'%A, %B %_d, %Y %r')"
-	ZB_PR_DATETIME="$FXP[reset]${dtcolor}${ZB_PR_DATETIME_PLAIN}"
+	ZB_PR_DATETIME="$FXP[reset]$BGP[${ZB_BACKGROUND_COLOR}]${dtcolor}${ZB_PR_DATETIME_PLAIN}"
 }
 
 function zb_pr_user()
