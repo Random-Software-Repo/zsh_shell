@@ -2,24 +2,19 @@
 ##*********************************************
 ##*********************************************
 ##
-##	MEDIA FUNCTIONS, ZSH ONLY
+##	MEDIA FUNCTIONS
 ##
-## THESE FUNCTIONS AND ALIASES ARE REALLY, I MEAN REALLY OLD. THEY MAY NOT WORK ANY MORE, AND NEED A THOROUGH REVIEW AND UPDATE
-## THESE FUNCTIONS AND ALIASES ARE REALLY, I MEAN REALLY OLD. THEY MAY NOT WORK ANY MORE, AND NEED A THOROUGH REVIEW AND UPDATE
-## THESE FUNCTIONS AND ALIASES ARE REALLY, I MEAN REALLY OLD. THEY MAY NOT WORK ANY MORE, AND NEED A THOROUGH REVIEW AND UPDATE
-## THESE FUNCTIONS AND ALIASES ARE REALLY, I MEAN REALLY OLD. THEY MAY NOT WORK ANY MORE, AND NEED A THOROUGH REVIEW AND UPDATE
 ##
 ##	Prequisits:
-##		Editing FLAC files:	metaflac	( flac-1.2.1-6.fc12.x86_64 )
-##		Editing MP3 files:	id3tag		( id3v2-0.1.12-2.fc15.x86_64 )
-##							id3tag is ancient and not in current linux distros.
-##		Editing OGG files:	vorbiscomment	( vorbis-tools-1.4.0-3.fc15.x86_64 )
+##		Editing FLAC files:	metaflac		(installed with the flac package)
+##		Editing MP3 files:	id3v2			(id3v2 package)
+##		Editing OGG files:	vorbiscomment	(installed with the vorbis-tools package)
 ##
-##		LISTING MP3/OGG files:	exiftool	( perl-Image-ExifTool-8.75-1.fc16.noarch )
+##		LISTING MP3/OGG files:	exiftool	(installed with the libimage-exiftool-perl package)
 ##
 ##*********************************************
 ##*********************************************
-if [[ "(( $+commands[id3tag] ))" -eq 1 && "(( $+commands[metaflac] ))" -eq 1 && "(( $+commands[vorbiscomment] ))" -eq 1 && "(( $+commands[exiftool] ))" -eq 1 ]]
+if [[ "(( $+commands[id3v2] ))" -eq 1 && "(( $+commands[metaflac] ))" -eq 1 && "(( $+commands[vorbiscomment] ))" -eq 1 && "(( $+commands[exiftool] ))" -eq 1 ]]
 then
 	function settag()
 	{
@@ -33,7 +28,7 @@ then
 			echo ""
 			echo "         $0 can operate on .mp3, .ogg and .flac files only at this time."
 			echo ""
-			echo "    SETTAG requires the 'metaflac' and 'id3tag' and 'vorbiscomment'  "
+			echo "    SETTAG requires the 'metaflac' and 'id3v2' and 'vorbiscomment'  "
 			echo "    supporting programs to operate on flac, mp3 and ogg files respectively."
 			return
 		fi
@@ -72,7 +67,7 @@ then
 						option=comment
 						;;
 				esac
-				id3tag -2 --${option}="$value" "$1"
+				id3v2 --${option} "$value" "$1"
 			elif [[ "$extension" == "flac" ]]
 			then
 				# a flac file
