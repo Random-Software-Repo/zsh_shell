@@ -29,23 +29,30 @@
 		}
 		function ytdl
 		{
+			# will cd the first of ~/tmp, ~/downloads, ~/Downloads, or ~/ found
+			# before downloading the video specified.
+			local owd=${PWD}
+			if [[ -d ~/tmp ]]
+			then
+				cd ~/tmp
+			elif [[ -d ~/downloads ]]
+			then
+				cd ~/downloads
+			elif [[ -d ~/Downloads ]]
+			then
+				cd ~/Downloads
+			else
+				cd ~/
+			fi
+			xytdl "$@"
+			cd ${owd}
+		}
+		function xytdl
+		{
 			if [[ "$#" -ne 2 ]]
 			then
 				ytdl-usage
 			else
-				local owd=${PWD}
-				if [[ -d ~/tmp ]]
-				then
-					cd ~/tmp
-				elif [[ -d ~/downloads ]]
-				then
-					cd ~/downloads
-				elif [[ -d ~/Downloads ]]
-				then
-					cd ~/Downloads
-				else
-					cd ~/
-				fi
 				local resolution="$1"
 				shift 1
 				while [[ "${1}" ]]
@@ -58,7 +65,6 @@
 					fi
 					shift 1
 				done
-				cd ${owd}
 			fi
 		}
 		alias youtube-dl=yt-dlp
@@ -69,7 +75,9 @@
 		alias y4='ytdl 480'
 		alias y5='ytdl 540'
 		alias y7='ytdl 720'
+		alias xy7='xytdl 720'
 		alias y10='ytdl 1080'
+		alias xy10='xytdl 1080'
 		alias y4k='ytdl 2160'
 	elif (( $+commands[youtube-dl] ))
 	then
