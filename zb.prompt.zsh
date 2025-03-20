@@ -43,7 +43,7 @@ ZB_C_DT=( 0 $FGP[94] 1 $FGP[94] 2 $FGP[130] 3 $FGP[130] 4 $FGP[172] 5 $FGP[172]
 # 3 Alt. Curved box ╭─🮤🮥─╮╰─🮤🮥─╯
 # 5 Heavy Arrow box ┏━►◄━┓┗━►◄━┛ (the alignment of these depends heavily on terminal and font)
 # 6+ Experimental
-##			1		2		3		4		5		6		7		8		9		10		11		12		13
+##			 1		 2		 3		 4		 5		 6		 7		 8		 9		 10		 11		 12		 13
 ZB_PR_UL_A=("┌"		"┏"		"╭"		"╭"		"┏"		"█"		"█"		"█"		"█"		"╭"		"╭"		"🭽"		"╭")
 ZB_PR_LL_A=("└"		"┗"		"╰"		"╰"		"┗"		"█"		"█"		"█"		"█"		"╰"		"╰"		"🭼"		"╰")
 ZB_PR_UR_A=("┐"		"┓"		"╮"		"╮"		"┓"		"█"		"█"		"█"		"█"		"╮"		"╮"		"🭾"		"╮")
@@ -279,8 +279,11 @@ function zb_pr_user()
 ##	long format date and time (colorized)
 function zb_prompt_precmd 
 {
-	zb_pr_set_decorations
+	### errorcode=$? MUST be the first line in zb_prompt_precmd 
+	### or the error code of the last run command will be lost
+	### and won't appear in the prompt.
 	local errorcode=$?
+	zb_pr_set_decorations
 	zb_pr_errorcode $errorcode
 
 	local runtime=0
