@@ -35,7 +35,7 @@ then
 	# da:as d,including dot files
 	# ds: as d, sort by size, including dot files
 	export TIME_STYLE=long-iso
-	alias ls="${NEWLS} --icons"
+	alias ls="${NEWLS} --icons --no-quotes"
 	alias d="${NEWLS} --icons --group-directories-first --no-quotes -lg"
 	alias da="${NEWLS} --icons --group-directories-first --no-quotes -lga"
 	alias ds="${NEWLS} --icons --group-directories-first --sort=size --no-quotes -lga"
