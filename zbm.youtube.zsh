@@ -47,6 +47,26 @@
 			xytdl "$@"
 			cd ${owd}
 		}
+		function xcleanurl
+		{
+			# will strip extra parameters from any youtube urls
+			# will also only use https in resulting urls, regardless of original
+			local xurl="${1}"
+			if [[ "${xurl}" =~ 'youtube\.com\/' ]]
+			then
+				local video=$(echo "${xurl}" | awk '-Fv=' '{print $2}'| awk '-F&' '{print $1}')
+				xurl="https://www.youtube.com/watch?v=${video}"
+			elif [[ "${xurl}" =~ 'youtube-nocookie\.com\/' ]]
+			then
+				local video=$(echo "${xurl}" | awk '-Fembed/' '{print $2}'| awk '-F?' '{print $1}')
+				xurl="https://www.youtube-nocookie.com/embed/${video}"
+			elif [[ "${xurl}" =~ 'youtu.be\/' ]]
+			then
+				local video=$(echo "${xurl}" | awk '-Fyoutu.be/' '{print $2}'| awk '-F?' '{print $1}')
+				xurl="https://youtu.be/${video}"
+			fi
+			echo "${xurl}"
+		}
 		function xytdl
 		{
 			if [[ "$#" -ne 2 ]]
@@ -57,11 +77,13 @@
 				shift 1
 				while [[ "${1}" ]]
 				do
-					yt-dlp --merge-output-format mkv   -f "(bestvideo[height=${resolution}])+(bestaudio)" "${1}"
+					local url="$(xcleanurl "${1}")"
+					echo "Downloading \"${url}\""
+					yt-dlp --merge-output-format mkv   -f "(bestvideo[height=${resolution}])+(bestaudio)" "${url}"
 					if [[ ! $? -eq 0 ]]
 					then
 						echo "Did not download video in ${resolution}p height. Trying width..."
-						yt-dlp --merge-output-format mkv   -f "(bestvideo[width=${resolution}])+(bestaudio)" "${1}"
+						yt-dlp --merge-output-format mkv   -f "(bestvideo[width=${resolution}])+(bestaudio)" "${url}"
 					fi
 					shift 1
 				done
